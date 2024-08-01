@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import appointmentRepository from '../../repositories/AppointmentRepository';
-import CreateAppointmentService from '../../modules/appointments/services/CreateAppointmentService';
+import appointmentRepository from '../../../../modules/appointments/repositories/AppointmentRepository';
+import CreateAppointmentService from '../../../../modules/appointments/services/CreateAppointmentService';
 import { parseISO } from 'date-fns';
 import evanueAuthentication from '../middlewares/evanueAuthentication';
 

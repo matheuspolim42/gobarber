@@ -1,5 +1,5 @@
-import dataSource from "../../../shared/database";
-import User from "../entities/User";
+import dataSource from "../../../shared/infra/typeorm";
+import User from "../infra/typeorm/entities/User";
 import uploadConfig from "../../../config/uploadConfig";
 import path from 'path';
 import fs from 'fs';

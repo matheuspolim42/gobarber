@@ -1,6 +1,5 @@
 import appointmentRepository from '../repositories/AppointmentRepository';
 import { startOfHour } from 'date-fns';
-import User from '../../users/entities/User';
 
 interface CreateAppointmentDTO {
   provider_id: string,

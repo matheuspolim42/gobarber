@@ -1,5 +1,5 @@
-import User from "../entities/User";
-import dataSource from "../../../shared/database";
+import User from "../infra/typeorm/entities/User";
+import dataSource from "../../../shared/infra/typeorm";
 import { hash } from "bcryptjs";
 
 interface Request {
