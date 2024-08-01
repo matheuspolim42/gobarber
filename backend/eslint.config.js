@@ -2,7 +2,6 @@ import globals from "globals";
 import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
 
-
 export default [
   js.configs.recommended,
 
@@ -11,6 +10,7 @@ export default [
       "import/extensions": [
         "error",
       ],
+      "@typescript-eslint/interface-name-prefix": ["error", { "prefixWithI": "always" }],
       "class-methods-use-this": "off",
       "ignorePackages": {
         "ts": "never"

@@ -1,4 +1,4 @@
-import appointmentRepository from '../repositories/AppointmentRepository';
+import appointmentRepository from '../infra/typeorm/repositories/AppointmentRepository';
 import { startOfHour } from 'date-fns';
 
 interface CreateAppointmentDTO {
