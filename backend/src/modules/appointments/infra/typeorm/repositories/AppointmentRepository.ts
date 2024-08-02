@@ -1,15 +1,16 @@
-import dataSource from '../../../../../shared/infra/typeorm';
-import IAppointmentRepository from '../../../repositories/IAppointmentsRepository';
+import { DataSource, Repository } from "typeorm";
 import Appointment from "../entities/Appointment";
 
-const appointmentRepository = dataSource.getRepository(Appointment).extend<IAppointmentRepository>({
-  async findByDate(parsedDate: Date): Promise<Appointment | undefined> {
-    const findAppointment = await this.findOne({
-      where: { date: parsedDate }
-    })
+class AppointmentRepository {
+  private ormDataSource: Repository<Appointment>;
 
-    return findAppointment;
+  constructor(dataSource: DataSource) {
+    this.ormDataSource = dataSource.getRepository(Appointment);
   }
-});
 
-export default appointmentRepository;
+  public async findByDate(date: Date): Promise<Appointment | null> {
+    const findAppointment = await this.ormDataSource.findOne({ where: { date } });
+
+    return findAppointment || null;
+  }
+}

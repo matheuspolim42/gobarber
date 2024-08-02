@@ -1,4 +1,4 @@
-import { DataSource } from "typeorm"
+import { DataSource } from "typeorm";
 
 const dataSource = new DataSource({
     type: "postgres",
@@ -13,8 +13,8 @@ const dataSource = new DataSource({
     migrations: [
       "./src/database/migrations/*.ts"
     ]
-})
+});
 
-dataSource.initialize()
+dataSource.initialize();
 
 export default dataSource;
