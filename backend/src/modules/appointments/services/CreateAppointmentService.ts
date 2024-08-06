@@ -1,6 +1,8 @@
+import "reflect-metadata"
 import IAppointmentRepository from '../repositories/IAppointmentsRepository';
-import { container, inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 import { startOfHour } from 'date-fns';
+import Appointment from '../infra/typeorm/entities/Appointment';
 
 interface IRequest {
   provider_id: string,
@@ -14,7 +16,7 @@ class CreateAppointmentService {
     private appointmentRepository: IAppointmentRepository
   ) {};
 
-  public async execute({ provider_id, date }: IRequest): Promise<Object> {
+  public async execute({ provider_id, date }: IRequest): Promise<Appointment> {
     const parsedDate = startOfHour(date);
 
     const dateExistsBoolean = await this.appointmentRepository.findByDate(parsedDate);
