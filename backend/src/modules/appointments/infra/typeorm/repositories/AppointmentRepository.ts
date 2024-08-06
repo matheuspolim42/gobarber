@@ -1,12 +1,13 @@
-import { DataSource, Repository } from "typeorm";
+import { Repository } from "typeorm";
 import Appointment from "../entities/Appointment";
+import dataSource from "../../../../../shared/infra/typeorm";
 import IAppointmentRepository from "../../../repositories/IAppointmentsRepository";
 import ICreateAppointmentDTO from "../../../dtos/ICreateAppointmentDTO";
 
 class AppointmentRepository implements IAppointmentRepository {
   private ormRepository: Repository<Appointment>;
 
-  constructor(dataSource: DataSource) {
+  constructor() {
     this.ormRepository = dataSource.getRepository(Appointment);
   }
 

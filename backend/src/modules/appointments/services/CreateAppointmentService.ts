@@ -1,7 +1,7 @@
 import IAppointmentRepository from '../repositories/IAppointmentsRepository';
 import { startOfHour } from 'date-fns';
 
-interface ICreateAppointmentDTO {
+interface IRequest {
   provider_id: string,
   date: Date,
 };
@@ -9,7 +9,7 @@ interface ICreateAppointmentDTO {
 class CreateAppointmentService {
   constructor(private appointmentRepository: IAppointmentRepository) {};
 
-  public async execute({ provider_id, date }: ICreateAppointmentDTO): Promise<Object> {
+  public async execute({ provider_id, date }: IRequest): Promise<Object> {
     const parsedDate = startOfHour(date);
 
     const dateExistsBoolean = await this.appointmentRepository.findByDate(parsedDate);

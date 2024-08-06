@@ -4,6 +4,8 @@ import multer from 'multer';
 import evanueAuthentication from '../middlewares/evanueAuthentication';
 import uploadConfig from '../../../../config/uploadConfig';
 import UpdateUserAvatarService from '../../../../modules/users/services/UpdateUserAvatarService';
+import UsersRepository from '../../../../modules/users/infra/typeorm/repositories/UsersRepository';
+
 
 const userRouter = Router();
 const upload = multer(uploadConfig);
@@ -11,7 +13,8 @@ const upload = multer(uploadConfig);
 userRouter.post('/', async (req, res) => {
   const { name, email, password } = req.body;
 
-  const createUserService = new CreateUserService();
+  const userRepository = new UsersRepository();
+  const createUserService = new CreateUserService(userRepository);
 
   const user = await createUserService.execute({
     name,
@@ -25,7 +28,8 @@ userRouter.post('/', async (req, res) => {
 })
 
 userRouter.patch('/avatar', evanueAuthentication, upload.single('avatar'), async (request, response) => {
-  const updateUserAvatar = new UpdateUserAvatarService();
+  const userRepository = new UsersRepository();
+  const updateUserAvatar = new UpdateUserAvatarService(userRepository);
 
   const user = await updateUserAvatar.execute({ user_id: request.user.id, avatarFileName: request.file.filename } );
 

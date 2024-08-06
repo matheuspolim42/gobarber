@@ -1,21 +1,21 @@
-import dataSource from "../../../shared/infra/typeorm";
+import IUserRepository from "../repositories/IUsersRepository";
 import User from "../infra/typeorm/entities/User";
 import uploadConfig from "../../../config/uploadConfig";
 import path from 'path';
 import fs from 'fs';
 
-interface Request {
+interface IRequest {
   user_id: string,
   avatarFileName: string,
 }
 
 class UpdateUserAvatarService {
-  public async execute({ user_id, avatarFileName }: Request): Promise<User> {
-    const userRepository = dataSource.getRepository(User);
+  constructor(
+    private userRepository: IUserRepository
+  ) {};
 
-    const user = await userRepository.findOne({
-      where: {id: user_id},
-    });
+  public async execute({ user_id, avatarFileName }: IRequest): Promise<User> {
+    const user = await this.userRepository.findById(user_id);
 
     if (!user) {
       throw new Error("User doesn't exist.");
@@ -32,7 +32,7 @@ class UpdateUserAvatarService {
 
     user.avatar = avatarFileName;
 
-    await userRepository.save(user);
+    await this.userRepository.save(user);
 
     return user;
   }

@@ -1,25 +1,25 @@
-import dataSource from '../../../shared/infra/typeorm';
+import IUserRepository from '../repositories/IUsersRepository';
 import User from '../infra/typeorm/entities/User';
 import { sign } from 'jsonwebtoken'
 import { compare } from 'bcryptjs';
 
-interface Request {
+interface IRequest {
   email: string;
   password: string;
 };
 
-interface Response {
+interface IResponse {
   user: User;
   token: string;
 }
 
 class CreateSessionService {
-  public async execute({ email, password }: Request): Promise<Response> {
-    const userRepository = dataSource.getRepository(User);
+  constructor(
+    private userRepository: IUserRepository
+  ) {};
 
-    const user = await userRepository.findOne({
-      where: { email }
-    })
+  public async execute({ email, password }: IRequest): Promise<IResponse> {
+    const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
       throw new Error("Incorrect email combination.");
