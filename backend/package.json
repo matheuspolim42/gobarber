@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev:server": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
+    "dev:server": "ts-node-dev --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
     "typeorm": "typeorm-ts-node-commonjs -d ./src/database/index.ts"
   },
   "devDependencies": {
@@ -45,6 +45,7 @@
     "path": "^0.12.7",
     "reflect-metadata": "^0.2.2",
     "tsc": "^2.0.4",
+    "tsyringe": "^4.8.0",
     "typeorm": "^0.3.20"
   }
 }

@@ -2,9 +2,7 @@ import { Router } from 'express';
 import CreateAppointmentService from '../../../../modules/appointments/services/CreateAppointmentService';
 import { parseISO } from 'date-fns';
 import evanueAuthentication from '../middlewares/evanueAuthentication';
-import AppointmentRepository from '../../../../modules/appointments/infra/typeorm/repositories/AppointmentRepository';
-import dataSource from '../../typeorm';
-import IAppointmentRepository from '../../../../modules/appointments/repositories/IAppointmentsRepository';
+import { container } from 'tsyringe';
 
 const appointmentRouter = Router();
 
@@ -22,8 +20,7 @@ appointmentRouter.post('/', async (req, res) => {
 
   const parsedDate = parseISO(date);
 
-  const appointmentRepository = new AppointmentRepository(dataSource);
-  const createAppointmentService = new CreateAppointmentService(appointmentRepository);
+  const createAppointmentService = container.resolve(CreateAppointmentService);
 
   const appointment = await createAppointmentService.execute({ provider_id, date: parsedDate });
 
