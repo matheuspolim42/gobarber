@@ -1,3 +1,4 @@
+import { container, inject, injectable } from 'tsyringe';
 import IUserRepository from '../repositories/IUsersRepository';
 import User from '../infra/typeorm/entities/User';
 import { sign } from 'jsonwebtoken'
@@ -13,8 +14,10 @@ interface IResponse {
   token: string;
 }
 
+@injectable()
 class CreateSessionService {
   constructor(
+    @inject('UsersRepository')
     private userRepository: IUserRepository
   ) {};
 

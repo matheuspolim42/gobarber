@@ -3,14 +3,17 @@ import User from "../infra/typeorm/entities/User";
 import uploadConfig from "../../../config/uploadConfig";
 import path from 'path';
 import fs from 'fs';
+import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
   user_id: string,
   avatarFileName: string,
 }
 
+@injectable()
 class UpdateUserAvatarService {
   constructor(
+    @inject('UsersRepository')
     private userRepository: IUserRepository
   ) {};
 

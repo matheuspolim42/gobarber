@@ -1,6 +1,7 @@
 import IUserRepository from "../repositories/IUsersRepository";
 import User from "../infra/typeorm/entities/User";
 import { hash } from "bcryptjs";
+import { inject, injectable } from "tsyringe";
 
 interface IRequest {
   name: string,
@@ -8,8 +9,10 @@ interface IRequest {
   password: string,
 };
 
+@injectable()
 class CreateUserService {
   constructor(
+    @inject('UsersRepository')
     private usersRepository: IUserRepository
   ) {};
 
