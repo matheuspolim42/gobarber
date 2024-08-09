@@ -3,7 +3,7 @@ import multer from 'multer';
 import evanueAuthentication from '../../../../shared/infra/http/middlewares/evanueAuthentication';
 import uploadConfig from '../../../../config/uploadConfig';
 import UsersController from '../controllers/UsersController';
-import UpdateAvatarController from '../controllers/UpdateAvatarController';
+import UpdateAvatarController from '../controllers/UserAvatarController';
 
 const userRouter = Router();
 const usersController = new UsersController();
