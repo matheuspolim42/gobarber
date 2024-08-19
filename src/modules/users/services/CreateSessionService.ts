@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import IUserRepository from '../repositories/IUsersRepository';
 import User from '../infra/typeorm/entities/User';
 import { sign } from 'jsonwebtoken'
-import type IHashProvider from '../providers/HashProvider/models/IHashProvider';
+import type IHashProvider from '../container/providers/HashProvider/models/IHashProvider';
 import AppError from '../../../shared/errors/AppError';
 import authConfig from '../../../config/authConfig';
 

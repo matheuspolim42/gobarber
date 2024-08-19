@@ -1,7 +1,7 @@
 import AppError from "../../../shared/errors/AppError";
 import FakeUsersRepository from "../fakes/FakeUsersRepository";
 import CreateUserService from "./CreateUserService";
-import HashProvider from "../providers/HashProvider/implementations/HashProvider";
+import HashProvider from "../container/providers/HashProvider/implementations/HashProvider";
 import CreateSessionService from "./CreateSessionService";
 import { create } from "domain";
 
