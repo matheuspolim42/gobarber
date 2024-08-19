@@ -1,8 +1,8 @@
-import IUserRepository from "../../../../repositories/IUsersRepository";
+import IUserRepository from "../repositories/IUsersRepository";
 import { v4 as uuid } from "uuid";
-import ICreateUserDTO from "../../../../dtos/ICreateUserDTO";
-import User from "../../entities/User";
-import AppError from "../../../../../../shared/errors/AppError";
+import ICreateUserDTO from "../dtos/ICreateUserDTO";
+import User from "../infra/typeorm/entities/User";
+import AppError from "../../../shared/errors/AppError";
 
 class FakeUsersRepository implements IUserRepository {
   private users: User[] = [];

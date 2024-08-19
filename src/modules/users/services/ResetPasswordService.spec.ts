@@ -1,6 +1,6 @@
-import FakeUsersRepository from '../infra/typeorm/repositories/fakes/FakeUsersRepository';
+import FakeUsersRepository from "../fakes/FakeUsersRepository";
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
-import FakeUserTokenRepository from '../infra/typeorm/repositories/fakes/FakeUserTokenRepository';
+import FakeUserTokenRepository from "../fakes/FakeUserTokenRepository";
 import ResetPasswordService from './ResetPasswordService';
 import AppError from '../../../shared/errors/AppError';
 

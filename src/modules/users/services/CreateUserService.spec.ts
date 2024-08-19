@@ -1,5 +1,5 @@
 import AppError from "../../../shared/errors/AppError";
-import FakeUsersRepository from "../infra/typeorm/repositories/fakes/FakeUsersRepository";
+import FakeUsersRepository from "../fakes/FakeUsersRepository";
 import CreateUserService from "./CreateUserService";
 import HashProvider from "../providers/HashProvider/implementations/HashProvider";
 
