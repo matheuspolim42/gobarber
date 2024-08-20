@@ -3,4 +3,5 @@ tmp
 JetBrainsMono.git
 eslintignore
 yarn.lock
-coverage
+/coverage.data
+/coverage/
