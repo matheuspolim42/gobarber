@@ -4,6 +4,8 @@ import IMailProvider from "../../../shared/providers/MailProvider/models/IMailPr
 import AppError from "../../../shared/errors/AppError";
 import IUserTokenRepository from "../repositories/IUserTokenRepository";
 
+import path from 'path';
+
 interface IRequest {
   email: string;
 };
@@ -30,6 +32,8 @@ class SendForgotPasswordByEmailService {
 
     const { token } = await this.userTokenRepository.generate(user.id);
 
+    const forgotPasswordTemplate = path.resolve(__dirname, '..', 'views','forgot_password.hbs');
+
     if (!token) {
       throw new AppError(401, 'This token is undefined.');
     }
@@ -41,10 +45,10 @@ class SendForgotPasswordByEmailService {
       },
       subject: '[GoBarber] Recuperacao de senha',
       templateData: {
-        template: 'Ola, {{name}}: {{token}}',
+        file: forgotPasswordTemplate,
         variables: {
           name: user.name,
-          token,
+          link: `http://localhost:3000/reset_password?token=${token}}`,
         },
       },
     });
