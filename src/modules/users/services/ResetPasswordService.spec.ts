@@ -4,18 +4,24 @@ import FakeUserTokenRepository from "../fakes/FakeUserTokenRepository";
 import ResetPasswordService from './ResetPasswordService';
 import AppError from '../../../shared/errors/AppError';
 
+let fakeUsersRepository: FakeUsersRepository;
+let fakeUserTokenRepository: FakeUserTokenRepository;
+let fakeHashProvider: FakeHashProvider;
+let resetPasswordService: ResetPasswordService;
+
 describe('ResetPassword', () => {
-  it('should be able to reset the user password', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeUserTokenRepository = new FakeUserTokenRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    
-    const resetPasswordService = new ResetPasswordService(
+  beforeEach(() => {
+    fakeUsersRepository = new FakeUsersRepository();
+    fakeUserTokenRepository = new FakeUserTokenRepository();
+    fakeHashProvider = new FakeHashProvider();
+    resetPasswordService = new ResetPasswordService(
       fakeUsersRepository,
       fakeHashProvider,
       fakeUserTokenRepository,
     );
+  });
 
+  it('should be able to reset the user password', async () => {
     const user = await fakeUsersRepository.create({
       name: "John Doe",
       email: "johndoe@example.com",
@@ -38,10 +44,6 @@ describe('ResetPassword', () => {
   });
 
   it('should be able to expire reset password request if passed 2 hours', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeUserTokenRepository = new FakeUserTokenRepository();
-    const fakeHashProvider = new FakeHashProvider();
-     
     const resetPasswordService = new ResetPasswordService(
       fakeUsersRepository,
       fakeHashProvider,
@@ -71,10 +73,6 @@ describe('ResetPassword', () => {
   });
 
   it('should not be able to reset the user password without user token.', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeUserTokenRepository = new FakeUserTokenRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    
     const resetPasswordService = new ResetPasswordService(
       fakeUsersRepository,
       fakeHashProvider,
@@ -88,10 +86,6 @@ describe('ResetPassword', () => {
   });
 
   it('should not be able to reset the user password without a user.', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeUserTokenRepository = new FakeUserTokenRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    
     const resetPasswordService = new ResetPasswordService(
       fakeUsersRepository,
       fakeHashProvider,
