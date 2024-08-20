@@ -1,6 +1,6 @@
-import AppError from "../../../../../../shared/errors/AppError";
-import IUserTokenRepository from "../../../../repositories/IUserTokenRepository";
-import UserToken from "../../entities/UserToken";
+import AppError from "../../../shared/errors/AppError";
+import IUserTokenRepository from "../repositories/IUserTokenRepository";
+import UserToken from "../infra/typeorm/entities/UserToken";
 import { v4 as uuid } from "uuid";
 
 class FakeUserTokenRepository implements IUserTokenRepository {
@@ -27,6 +27,14 @@ class FakeUserTokenRepository implements IUserTokenRepository {
 
     return userToken;
   };
+
+  public async delete(token: string): Promise<void> {
+    const userToken = await this.findByToken(token);
+
+    const index = this.usersTokens.findIndex(findUserToken => userToken.id === findUserToken.id);
+
+    this.usersTokens.splice(index, 1);
+  }
 };
 
 export default FakeUserTokenRepository;

@@ -34,10 +34,20 @@ class SendForgotPasswordByEmailService {
       throw new AppError(401, 'This token is undefined.');
     }
 
-    await this.mailProvider.sendMail(
-      email,
-      "Pedido de redefinicao de senha recebido",
-    );
+    await this.mailProvider.sendMail({
+      to: {
+        name: user.name,
+        email: user.email,
+      },
+      subject: '[GoBarber] Recuperacao de senha',
+      templateData: {
+        template: 'Ola, {{name}}: {{token}}',
+        variables: {
+          name: user.name,
+          token,
+        },
+      },
+    });
   };
 };
 

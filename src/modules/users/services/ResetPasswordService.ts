@@ -13,13 +13,13 @@ interface Request {
 @injectable()
 class ResetPasswordService {
   constructor(
-    @inject('UserRepository')
+    @inject('UsersRepository')
     private userRepository: IUserRepository,
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
 
-    @inject('UserTokenRepository')
+    @inject('UserTokensRepository')
     private userTokenRepository: IUserTokenRepository,
   ) {};
 
@@ -45,6 +45,8 @@ class ResetPasswordService {
     user.password = await this.hashProvider.hashGenerate(password);
 
     await this.userRepository.save(user);
+
+    await this.userTokenRepository.delete(userToken.token);
   };
 };
 

@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import IUserRepository from '../repositories/IUsersRepository';
 import User from '../infra/typeorm/entities/User';
 import { sign } from 'jsonwebtoken'
-import type IHashProvider from '../container/providers/HashProvider/models/IHashProvider';
+import IHashProvider from '../container/providers/HashProvider/models/IHashProvider';
 import AppError from '../../../shared/errors/AppError';
 import authConfig from '../../../config/authConfig';
 
@@ -33,7 +33,7 @@ class CreateSessionService {
       throw new AppError(401, "Incorrect email combination.");
     }
 
-    const passwordMatched = await this.hashProvider.comparePassword(password, user.password);
+    const passwordMatched = await this.hashProvider.compareHash(password, user.password);
 
     if (!passwordMatched) {
       throw new AppError(401, "Incorrect password combination.");

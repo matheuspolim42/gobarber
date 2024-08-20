@@ -13,7 +13,7 @@ class UserTokensRepository implements IUserTokenRepository {
   public async findByToken(token: string): Promise<UserToken | undefined> {
     const userToken = this.ormRepository.findOne({
       where: { token },
-    });
+    }); 
 
     return userToken;
   };
@@ -27,6 +27,12 @@ class UserTokensRepository implements IUserTokenRepository {
 
     return userToken;
   };
+
+  public async delete(token: string): Promise<void> {
+    const userToken = await this.findByToken(token);
+
+    this.ormRepository.delete(userToken.id);
+  }
 };
 
 export default UserTokensRepository;
