@@ -7,7 +7,7 @@ class ForgotPasswordController {
   public async create(req: Request, res: Response): Promise<Response> {
     const { email } = req.body;
 
-    const sendForgotPasswordEmail  = container.resolve(SendForgotPasswordByEmailService);
+    const sendForgotPasswordEmail = container.resolve(SendForgotPasswordByEmailService);
 
     await sendForgotPasswordEmail.execute({ 
       email 

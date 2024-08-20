@@ -11,13 +11,13 @@ interface IRequest {
 @injectable()
 class SendForgotPasswordByEmailService {
   constructor(
-    @inject('UsersRepository')
-    private usersRepository: IUserRepository,
-
     @inject('MailProvider')
     private mailProvider: IMailProvider,
 
-    @inject('UserTokenRepository')
+    @inject('UsersRepository')
+    private usersRepository: IUserRepository,
+
+    @inject('UserTokensRepository')
     private userTokenRepository: IUserTokenRepository,
   ) {};
 
@@ -34,7 +34,7 @@ class SendForgotPasswordByEmailService {
       throw new AppError(401, 'This token is undefined.');
     }
 
-    this.mailProvider.sendMail(
+    await this.mailProvider.sendMail(
       email,
       "Pedido de redefinicao de senha recebido",
     );

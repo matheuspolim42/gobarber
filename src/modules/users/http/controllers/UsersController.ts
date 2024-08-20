@@ -4,6 +4,7 @@ import CreateUserService from "../../services/CreateUserService";
 
 class UsersController {
   public async create(req: Request, res: Response): Promise<Response> {
+    console.log(req.body);
     const { name, email, password } = req.body;
 
     const createUserService = container.resolve(CreateUserService);

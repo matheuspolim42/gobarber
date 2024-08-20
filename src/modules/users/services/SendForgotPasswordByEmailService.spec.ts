@@ -1,8 +1,8 @@
-import FakeUsersRepository from '../infra/typeorm/repositories/fakes/FakeUsersRepository';
+import FakeUsersRepository from "../fakes/FakeUsersRepository";
 import SendForgotPasswordByEmailService from './SendForgotPasswordByEmailService';
 import FakeMailProvider from '../../../shared/providers/MailProvider/fakes/FakeMailProvider';
 import AppError from '../../../shared/errors/AppError';
-import FakeUserTokenRepository from '../infra/typeorm/repositories/fakes/FakeUserTokenRepository';
+import FakeUserTokenRepository from "../fakes/FakeUserTokenRepository";
 
 describe('SendForgotPasswordByEmail', () => {
   it('should be able to receive the email recover password', async () => {
@@ -13,8 +13,8 @@ describe('SendForgotPasswordByEmail', () => {
     const sendMail = jest.spyOn(fakeMailProvider, 'sendMail');
 
     const sendForgotPasswordByEmail = new SendForgotPasswordByEmailService(
-      fakeUsersRepository,
       fakeMailProvider,
+      fakeUsersRepository,
       fakeUserTokenRepository,
     );
 
@@ -37,8 +37,8 @@ describe('SendForgotPasswordByEmail', () => {
     const fakeUserTokenRepository = new FakeUserTokenRepository();
 
     const sendForgotPasswordByEmail = new SendForgotPasswordByEmailService(
-      fakeUsersRepository,
       fakeMailProvider,
+      fakeUsersRepository,
       fakeUserTokenRepository,
     );
 
@@ -55,8 +55,8 @@ describe('SendForgotPasswordByEmail', () => {
     const generate = jest.spyOn(fakeUserTokenRepository, 'generate');
 
     const sendForgotPasswordByEmail = new SendForgotPasswordByEmailService(
-      fakeUsersRepository,
       fakeMailProvider,
+      fakeUsersRepository,
       fakeUserTokenRepository,
     );
 
@@ -80,8 +80,8 @@ describe('SendForgotPasswordByEmail', () => {
     const fakeUserTokenRepository = new FakeUserTokenRepository();
 
     const sendForgotPasswordByEmail = new SendForgotPasswordByEmailService(
-      fakeUsersRepository,
       fakeMailProvider,
+      fakeUsersRepository,
       fakeUserTokenRepository,
     );
     
