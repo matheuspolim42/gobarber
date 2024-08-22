@@ -1,4 +1,4 @@
-import { Repository } from "typeorm";
+import { Repository, Not } from "typeorm";
 import IUserRepository from "../../../repositories/IUsersRepository";
 import User from "../entities/User";
 import dataSource from "../../../../../shared/infra/typeorm";
@@ -10,6 +10,16 @@ class UsersRepository implements IUserRepository {
   constructor() {
     this.ormRepository = dataSource.getRepository(User);
   }
+
+  public async getAllProviders(except_user_id?: string): Promise<User[]> {
+    const users = await this.ormRepository.find({
+      where: {
+        id: Not(except_user_id),
+       },
+    });
+
+    return users;
+  };
 
   public async findById(id: string): Promise<User | undefined> {
     const user = this.ormRepository.findOne({

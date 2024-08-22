@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
 import authConfig from "../../../../config/authConfig";
+import AppError from "../../../errors/AppError";
 
 interface TokenPayload {
   iat: number,
@@ -13,13 +14,13 @@ export default async function evanueAuthentication(request: Request,
     const authHeader = request.headers.authorization;
 
     if (!authHeader) {
-      throw new Error("JWT token is missing");
+      throw new AppError(401, "JWT token is missing");
     }
 
     const [,token] = authHeader.split(' ');
 
     try {
-      const decoded = await verify(token, authConfig.jwt.secretKey);
+      const decoded = verify(token, authConfig.jwt.secretKey);
 
       const { sub } = decoded as TokenPayload;
 

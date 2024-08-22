@@ -1,10 +1,9 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import CreateUserService from "../../services/CreateUserService";
+import CreateUserService from '../../../services/CreateUserService';
 
 class UsersController {
   public async create(req: Request, res: Response): Promise<Response> {
-    console.log(req.body);
     const { name, email, password } = req.body;
 
     const createUserService = container.resolve(CreateUserService);
@@ -12,13 +11,13 @@ class UsersController {
     const user = await createUserService.execute({
       name,
       email,
-      password
+      password,
     });
 
     delete user.password;
 
     return res.json(user);
   }
-};
+}
 
 export default UsersController;

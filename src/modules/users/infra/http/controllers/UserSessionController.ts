@@ -1,6 +1,6 @@
-import { container } from "tsyringe";
-import { Request, Response } from "express";
-import CreateSessionService from "../../services/CreateSessionService";
+import { container } from 'tsyringe';
+import { Request, Response } from 'express';
+import CreateSessionService from '../../../services/CreateSessionService';
 
 class UserSessionController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -14,6 +14,6 @@ class UserSessionController {
 
     return res.json({ user, token });
   }
-};
+}
 
 export default UserSessionController;
