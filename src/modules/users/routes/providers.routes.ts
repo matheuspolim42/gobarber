@@ -7,6 +7,6 @@ const providerController = new ProvidersController();
 
 providerRouter.use(evanueAuthentication);
 
-providerRouter.get('/', providerController.index);
+providerRouter.get("/", providerController.index);
 
 export default providerRouter;

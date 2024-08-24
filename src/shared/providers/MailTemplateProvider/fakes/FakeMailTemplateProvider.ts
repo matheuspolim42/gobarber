@@ -2,9 +2,9 @@ import IParseMailTemplateDTO from "../dtos/IParseMailTemplateDTO";
 import IMailTemplateProvider from "../models/IMailTemplateProvider";
 
 class FakeMailTemplateProvider implements IMailTemplateProvider {
-  public async parse(): Promise<string> {
-    return 'Mail Content';
-  }
+	public async parse(): Promise<string> {
+		return "Mail Content";
+	}
 }
 
 export default FakeMailTemplateProvider;

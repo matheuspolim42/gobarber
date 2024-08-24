@@ -1,19 +1,16 @@
-import { Router } from 'express';
-import evanueAuthentication from '../../../../shared/infra/http/middlewares/evanueAuthentication';
-import AppointmentsController from '../controllers/AppointmentsController';
+import { Router } from "express";
+import evanueAuthentication from "../../../../shared/infra/http/middlewares/evanueAuthentication";
+import AppointmentsController from "../controllers/AppointmentsController";
+import ProviderMonthController from "../controllers/ProviderMonthController";
 
 const appointmentRouter = Router();
 const appointmentsController = new AppointmentsController();
+const providerMonthController = new ProviderMonthController();
 
 appointmentRouter.use(evanueAuthentication);
 
-// appointmentRouter.get('/', async (req, res) => {
-//   const appointmentRepository = new AppointmentRepository(dataSource);
-//   const content = await appointmentRepository.();
+appointmentRouter.get("/", providerMonthController.showAvailability);
 
-//   res.json(content).status(200);
-// })
-
-appointmentRouter.post('/', appointmentsController.create);
+appointmentRouter.post("/", appointmentsController.create);
 
 export default appointmentRouter;

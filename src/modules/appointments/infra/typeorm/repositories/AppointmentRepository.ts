@@ -1,29 +1,62 @@
-import { Repository } from "typeorm";
-import Appointment from "../entities/Appointment";
+import { getDate, getMonth, getYear } from "date-fns";
+import type { Repository } from "typeorm";
 import dataSource from "../../../../../shared/infra/typeorm";
-import IAppointmentRepository from "../../../repositories/IAppointmentsRepository";
-import ICreateAppointmentDTO from "../../../dtos/ICreateAppointmentDTO";
+import type ICreateAppointmentDTO from "../../../dtos/ICreateAppointmentDTO";
+import type IListProviderMonthAvailabilityDTO from "../../../dtos/IListProviderMonthAvailabilityDTO";
+import type IAppointmentRepository from "../../../repositories/IAppointmentsRepository";
+import Appointment from "../entities/Appointment";
 
 class AppointmentRepository implements IAppointmentRepository {
-  private ormRepository: Repository<Appointment>;
+	private ormRepository: Repository<Appointment>;
 
-  constructor() {
-    this.ormRepository = dataSource.getRepository(Appointment);
-  }
+	constructor() {
+		this.ormRepository = dataSource.getRepository(Appointment);
+	}
 
-  public async findByDate(date: Date): Promise<Appointment | null> {
-    const findAppointment = await this.ormRepository.findOne({ where: { date } });
+	public async findByDate(date: Date): Promise<Appointment | null> {
+		const findAppointment = await this.ormRepository.findOne({
+			where: { date },
+		});
 
-    return findAppointment || null;
-  }
+		return findAppointment || null;
+	}
 
-  public async create({ provider_id, date }: ICreateAppointmentDTO): Promise<Appointment> {
-    const appointment = this.ormRepository.create({ provider_id, date });
+	public async findAllMonthAvailability(
+		user_id: string,
+		year: number,
+		month: number,
+	): Promise<IListProviderMonthAvailabilityDTO[]> {
+		const appointments = await this.ormRepository.find();
+		const datesInTheMonth = appointments.filter((appointment) => {
+			return (
+				// biome-ignore lint/suspicious/noDoubleEquals: <explanation>
+				getMonth(appointment.date) + 1 == month &&
+				// biome-ignore lint/suspicious/noDoubleEquals: <explanation>
+				getYear(appointment.date) == year &&
+				appointment.provider_id === user_id
+			);
+		});
 
-    await this.ormRepository.save(appointment);
+		const daysAvailability = datesInTheMonth.map((appointmentInTheMonth) => {
+			return {
+				day: getDate(appointmentInTheMonth.date),
+				available: false,
+			};
+		});
 
-    return appointment;
-  }
+		return daysAvailability;
+	}
+
+	public async create({
+		provider_id,
+		date,
+	}: ICreateAppointmentDTO): Promise<Appointment> {
+		const appointment = this.ormRepository.create({ provider_id, date });
+
+		await this.ormRepository.save(appointment);
+
+		return appointment;
+	}
 }
 
 export default AppointmentRepository;
