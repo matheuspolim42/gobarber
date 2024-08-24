@@ -1,7 +1,8 @@
-import { getDate, getMonth, getYear } from "date-fns";
+import { getDate, getHours, getMonth, getYear } from "date-fns";
 import type { Repository } from "typeorm";
 import dataSource from "../../../../../shared/infra/typeorm";
 import type ICreateAppointmentDTO from "../../../dtos/ICreateAppointmentDTO";
+import type IListProviderDayAvailabilityDTO from "../../../dtos/IListProviderDayAvailabilityDTO";
 import type IListProviderMonthAvailabilityDTO from "../../../dtos/IListProviderMonthAvailabilityDTO";
 import type IAppointmentRepository from "../../../repositories/IAppointmentsRepository";
 import Appointment from "../entities/Appointment";
@@ -45,6 +46,40 @@ class AppointmentRepository implements IAppointmentRepository {
 		});
 
 		return daysAvailability;
+	}
+
+	public async findAllInDay(
+		provider_id: string,
+		day: number,
+		month: number,
+		year: number,
+	): Promise<IListProviderDayAvailabilityDTO[]> {
+		const appointments = await this.ormRepository.find();
+		const parsedAppointments = appointments.filter((appointment) => {
+			return (
+				getDate(appointment.date) === day &&
+				getMonth(appointment.date) + 1 === month &&
+				getYear(appointment.date) === year &&
+				appointment.provider_id === provider_id
+			);
+		});
+
+		const startHour = 8;
+
+		const hoursAvailability = parsedAppointments
+			.filter((appointmentsDay) => getHours(appointmentsDay.date) < 17)
+			.map((appointmentsDay) => {
+				return {
+					hour: getHours(appointmentsDay.date) + startHour,
+					available: false,
+				};
+			});
+
+		const filteredHoursAvailability = hoursAvailability.filter((hoursArray) => {
+			return hoursArray.hour <= 17;
+		});
+
+		return filteredHoursAvailability;
 	}
 
 	public async create({

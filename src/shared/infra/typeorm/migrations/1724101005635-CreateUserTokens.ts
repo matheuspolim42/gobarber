@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { type MigrationInterface, type QueryRunner, Table } from "typeorm";
 
 export default class CreateUserTokens1724101005635
 	implements MigrationInterface
@@ -33,7 +33,7 @@ export default class CreateUserTokens1724101005635
 					{
 						name: "updated_at",
 						type: "timestamp",
-						default: `now()`,
+						default: "now()",
 					},
 				],
 				foreignKeys: [

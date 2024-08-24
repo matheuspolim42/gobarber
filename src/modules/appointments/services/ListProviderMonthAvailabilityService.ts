@@ -45,7 +45,7 @@ class ListProviderMonthAvailabilityService {
 
 			return {
 				day,
-				available: appointmentsInDay.length > 10,
+				available: appointmentsInDay.length < 10,
 			};
 		});
 

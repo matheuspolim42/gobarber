@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { type MigrationInterface, type QueryRunner, Table } from "typeorm";
 
 export default class CreateAppointments1720151478991
 	implements MigrationInterface
@@ -13,7 +13,7 @@ export default class CreateAppointments1720151478991
 						type: "uuid",
 						isPrimary: true,
 						generationStrategy: "uuid",
-						default: `uuid_generate_v4()`,
+						default: "uuid_generate_v4()",
 					},
 					{
 						name: "provider",
@@ -26,12 +26,12 @@ export default class CreateAppointments1720151478991
 					{
 						name: "created_at",
 						type: "timestamp",
-						default: `now()`,
+						default: "now()",
 					},
 					{
 						name: "updated_at",
 						type: "timestamp",
-						default: `now()`,
+						default: "now()",
 					},
 				],
 			}),

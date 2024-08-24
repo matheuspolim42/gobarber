@@ -1,4 +1,4 @@
-import { getDate, getDaysInMonth } from "date-fns";
+import { getDate, getDaysInMonth, isAfter } from "date-fns";
 import { inject, injectable } from "tsyringe";
 
 import type IAppointmentRepository from "../repositories/IAppointmentsRepository";
@@ -16,20 +16,48 @@ type IResponse = Array<{
 }>;
 
 @injectable()
-class ListProviderMonthAvailabilityService {
+class ListProviderDayAvailabilityService {
 	constructor(
 		@inject("AppointmentRepository")
 		private appointmentRepository: IAppointmentRepository,
 	) {}
 
-	public async execute({
-		user_id,
-		year,
-		month,
-		day,
-	}: IRequest): Promise<IResponse> {
-		return [{ hour: 8, available: false }];
+	public async execute(
+		provider_id: string,
+		year: number,
+		month: number,
+		day: number,
+	): Promise<IResponse> {
+		const hoursNotAvailable = await this.appointmentRepository.findAllInDay(
+			provider_id,
+			day,
+			month,
+			year,
+		);
+
+		const hourStart = 8;
+
+		const eachHourArray = Array.from(
+			{ length: 10 },
+			(_, index) => index + hourStart,
+		);
+
+		const availability = eachHourArray.map((hour) => {
+			const hasAppointmentInHour = hoursNotAvailable.some((hourBooked) => {
+				return hourBooked.hour === hour;
+			});
+
+			const currentDate = new Date(Date.now());
+			const compareDate = new Date(year, month - 1, day, hour);
+
+			return {
+				hour,
+				available: !hasAppointmentInHour && isAfter(compareDate, currentDate),
+			};
+		});
+
+		return availability;
 	}
 }
 
-export default ListProviderMonthAvailabilityService;
+export default ListProviderDayAvailabilityService;

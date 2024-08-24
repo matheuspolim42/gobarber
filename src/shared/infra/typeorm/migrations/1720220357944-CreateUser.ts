@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { type MigrationInterface, type QueryRunner, Table } from "typeorm";
 
 export default class CreateUser1720220357944 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
@@ -11,7 +11,7 @@ export default class CreateUser1720220357944 implements MigrationInterface {
 						type: "uuid",
 						isPrimary: true,
 						generationStrategy: "uuid",
-						default: `uuid_generate_v4()`,
+						default: "uuid_generate_v4()",
 					},
 					{
 						name: "name",
@@ -30,7 +30,7 @@ export default class CreateUser1720220357944 implements MigrationInterface {
 					{
 						name: "updated_at",
 						type: "timestamp",
-						default: `now()`,
+						default: "now()",
 					},
 				],
 			}),

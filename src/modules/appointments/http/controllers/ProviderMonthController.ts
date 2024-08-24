@@ -11,13 +11,11 @@ class ProviderMonthController {
 			ListProviderMonthAvailabilityService,
 		);
 
-		const availabilityDays = await listProviderMonthAvailabilityService.execute(
-			{
-				user_id,
-				month,
-				year,
-			},
-		);
+		const availabilityDays = await listProviderMonthAvailabilityService.execute({
+			user_id,
+			month,
+			year,
+		});
 
 		return res.json(availabilityDays);
 	}

@@ -1,5 +1,10 @@
 import { query } from "express";
-import { Column, MigrationInterface, QueryRunner, TableColumn } from "typeorm";
+import {
+	Column,
+	type MigrationInterface,
+	type QueryRunner,
+	TableColumn,
+} from "typeorm";
 
 export class CreatePasswordColumnUser1720396414902
 	implements MigrationInterface
