@@ -53,7 +53,7 @@ class AppointmentRepository implements IAppointmentRepository {
 		day: number,
 		month: number,
 		year: number,
-	): Promise<IListProviderDayAvailabilityDTO[]> {
+	): Promise<Appointment[]> {
 		const appointments = await this.ormRepository.find();
 		const parsedAppointments = appointments.filter((appointment) => {
 			return (
@@ -64,22 +64,7 @@ class AppointmentRepository implements IAppointmentRepository {
 			);
 		});
 
-		const startHour = 8;
-
-		const hoursAvailability = parsedAppointments
-			.filter((appointmentsDay) => getHours(appointmentsDay.date) < 17)
-			.map((appointmentsDay) => {
-				return {
-					hour: getHours(appointmentsDay.date) + startHour,
-					available: false,
-				};
-			});
-
-		const filteredHoursAvailability = hoursAvailability.filter((hoursArray) => {
-			return hoursArray.hour <= 17;
-		});
-
-		return filteredHoursAvailability;
+		return parsedAppointments;
 	}
 
 	public async create({

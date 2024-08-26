@@ -1,4 +1,4 @@
-import { getDate, getDaysInMonth, isAfter } from "date-fns";
+import { getDate, getDaysInMonth, getHours, isAfter } from "date-fns";
 import { inject, injectable } from "tsyringe";
 
 import type IAppointmentRepository from "../repositories/IAppointmentsRepository";
@@ -44,7 +44,7 @@ class ListProviderDayAvailabilityService {
 
 		const availability = eachHourArray.map((hour) => {
 			const hasAppointmentInHour = hoursNotAvailable.some((hourBooked) => {
-				return hourBooked.hour === hour;
+				return getHours(hourBooked.date) === hour;
 			});
 
 			const currentDate = new Date(Date.now());

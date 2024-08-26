@@ -3,7 +3,7 @@ import { container } from "tsyringe";
 import ListProviderDayAvailabilityService from "../../services/ListProviderDayAvailabilityService";
 
 class AppointmentHoursController {
-	public async indexAvailabilityHours(req: Request, res: Response) {
+	public async showAvailabilityHours(req: Request, res: Response) {
 		const provider_id = req.user.id;
 		const { year, month, day } = req.body;
 

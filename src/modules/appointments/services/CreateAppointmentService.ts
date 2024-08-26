@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { startOfHour } from "date-fns";
+import { isBefore, startOfHour } from "date-fns";
 import { inject, injectable } from "tsyringe";
 import AppError from "../../../shared/errors/AppError";
 import type Appointment from "../infra/typeorm/entities/Appointment";
@@ -24,6 +24,20 @@ class CreateAppointmentService {
 		date,
 	}: IRequest): Promise<Appointment> {
 		const parsedDate = startOfHour(date);
+
+		if (isBefore(parsedDate, Date.now())) {
+			throw new AppError(
+				401,
+				"you can't create an appointment on the past date.",
+			);
+		}
+
+		if (user_id === provider_id) {
+			throw new AppError(
+				401,
+				"you can't create an appointment with only yourself.",
+			);
+		}
 
 		const dateExistsBoolean =
 			await this.appointmentRepository.findByDate(parsedDate);

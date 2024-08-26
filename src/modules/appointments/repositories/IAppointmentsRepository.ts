@@ -16,5 +16,5 @@ export default interface IAppointmentRepository {
 		day: number,
 		month: number,
 		year: number,
-	): Promise<IListProviderDayAvailabilityDTO[]>;
+	): Promise<Appointment[]>;
 }
